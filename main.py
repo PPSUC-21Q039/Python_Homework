@@ -20,12 +20,12 @@ import urllib.parse # Decode the URL Code
 # Change the Default Encoding 
 import io
 import sys
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='gb18030')
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='gb18030')
 
 CUSTOMIZED_KEYWORD = [] 
 
 
-# Parse the file downloads.sqlite and output the download record
+# Parsing the file downloads.sqlite and output the download record
 def print_downloads(download_db):
     conn = sqlite3.connect(download_db)
     c = conn.cursor()
@@ -35,7 +35,7 @@ def print_downloads(download_db):
         print ('[+] File: ' + str(row[0]) + ' from source: ' + str(row[1]) + ' at: ' + str(row[2]))
 
 
-# Parse the file cookies.sqlite and output the Cookies
+# Parsing the file cookies.sqlite and output the Cookies
 def print_cookies(cookies_db):
     try:
         conn = sqlite3.connect(cookies_db)
@@ -54,7 +54,7 @@ def print_cookies(cookies_db):
             print ('[*] Upgrade your Python-Sqlite3 Library')
 
 
-# Parse the file places.sqlite and output the History Record
+# Parsing the file places.sqlite and output the History Record
 def print_history(placed_db):
     try:
         conn = sqlite3.connect(placed_db)
@@ -75,7 +75,7 @@ def print_history(placed_db):
     return 
 
 
-# Parse the file placed.sqlite and output the Search History
+# Parsing the file placed.sqlite and output the Search History
 def print_search_engine(placed_db):
     try:
         conn = sqlite3.connect(placed_db)
@@ -179,7 +179,7 @@ def print_search_engine(placed_db):
     print ("\n")
     return 
 
-# Parse the file places.sqlite and output the Bookmark Names and URLs
+# Parsing the file places.sqlite and output the Bookmark Names and URLs
 def print_bookmark(placed_db):
     try:
         conn = sqlite3.connect(placed_db)
@@ -247,7 +247,7 @@ def print_bookmark(placed_db):
     print ("\n")
     
     # Wikipedia or 维基
-    print ("-- Bookmark names contains keyword \"Wikipedia:\" or \"维基\" --")
+    print ("-- Bookmark names contains keyword \"Wikipedia\" or \"维基\" --")
     c.execute("select title from moz_bookmarks")
     for row in c:
         title = str(row[0])
@@ -327,6 +327,7 @@ def print_bookmark(placed_db):
     return
 
 
+# Parsing the bookmark by customized keywords
 def bookmark_customized_keywords(placed_db, customized_keyword = CUSTOMIZED_KEYWORD):
     try:
         conn = sqlite3.connect(placed_db)
@@ -360,10 +361,11 @@ def bookmark_customized_keywords(placed_db, customized_keyword = CUSTOMIZED_KEYW
     return   
 
 
+# Main function
 def main():
-    parser = optparse.OptionParser("[*] Usage: firefoxParse.py -p <firefox profile path> ")
-    parser.add_option('-p', dest = 'path_name', type = 'string', help = 'Specify Firefox Profile Path')
-    parser.add_option('-c', dest = 'custom_keyword', help = 'Specify Custom Keyword Dictionary')
+    parser = optparse.OptionParser("[*] Usage: main.py -p <firefox profile path> -c <Custom keyword dictionary>")
+    parser.add_option('-p', dest = 'path_name', type = 'string', help = 'Specify Firefox profile path')
+    parser.add_option('-k', dest = 'custom_keyword', help = 'Specify custom keyword dictionary file')
     (options, args) = parser.parse_args()
 
     path_name = options.path_name
