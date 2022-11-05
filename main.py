@@ -11,8 +11,9 @@
 
 import re
 import os
-import sqlite3
 import json
+import time
+import sqlite3
 import optparse
 import urllib.parse  # Decode the URL Code
 
@@ -96,8 +97,6 @@ class Firefox:
                 exit(0)
         print("\n")
         return 
-
-
 
 
     # Parsing the file placed.sqlite and output the Search History
@@ -468,6 +467,39 @@ class Chromium:
         return
 
 
+    def print_history(history_db):
+        conn = sqlite3.connect(history_db)
+        c = conn.cursor()
+        c.execute("select * from urls")
+        #c.execute("select url, last_visit_time(visit_date/1000000, 'unixepoch') from urls where visit_count > 0")
+        print('\n\n\n[*] -- Browsing History --')
+        for row in c:
+            title = row[2]
+            url = row[1]
+            print('[+] Visited ' + title + ': ' + url)
+        return
+
+
+    def print_search_engine(history_db):
+        conn = sqlite3.connect(history_db)
+        c = conn.cursor()
+        c.execute("SELECT normalized_term FROM keyword_search_terms;")
+        print('\n\n\n[*] -- Search Engine Record -- ')
+        for row in c:
+            print('[+] Search Record: ' + str(row))
+        return
+
+
+    def print_downloads(download_db):
+        conn = sqlite3.connect(download_db)
+        c = conn.cursor()
+        c.execute("SELECT url FROM downloads_url_chains;")
+        print('\n\n\n[*] -- Files Downloaded -- ')
+        for row in c:
+            print('[+] File: ' + str(row))
+        return
+
+
     def customized_print_bookmark(bookmark_file, customized_keyword):
         try:
             with open(bookmark_file, 'r', encoding='utf-8') as input_bookmark:
@@ -485,20 +517,20 @@ class Chromium:
         return
 
 
-    def print_history():
-        return
-
-    def customized_print_history():
-        return
-
-    def print_search_engine(history_db):
+    def customized_print_history(history_db, customized_keyword):
         conn = sqlite3.connect(history_db)
         c = conn.cursor()
-        c.execute("SELECT normalized_term FROM keyword_search_terms;")
-        print('\n[*] -- Search Engine Record -- ')
+        c.execute("select * from urls")
+        #c.execute("select url, last_visit_time(visit_date/1000000, 'unixepoch') from urls where visit_count > 0")
+        print('\n\n\n[*] -- Browsing History that contain customized keyword --')
         for row in c:
-            print('[+] Search Record: ' + str(row))
+            title = row[2]
+            url = row[1]
+            for keyword in customized_keyword:
+                if keyword.lower() in title.lower() or keyword.lower() in url.lower():
+                    print('[+] History hint keyword \"' + keyword.strip() + '\": '+ title + ', ' + url)
         return
+
 
     def customized_print_search_engine(history_db, customized_keyword):
         conn = sqlite3.connect(history_db)
@@ -511,14 +543,6 @@ class Chromium:
                     print('[+] Search Record hint keyword \"' + keyword + '\": ' + str(row))
         return
 
-    def print_downloads(download_db):
-        conn = sqlite3.connect(download_db)
-        c = conn.cursor()
-        c.execute("SELECT url FROM downloads_url_chains;")
-        print('\n[*] -- Files Downloaded -- ')
-        for row in c:
-            print('[+] File: ' + str(row))
-        return
 
     def customized_print_downloads(download_db, customized_keyword):
         conn = sqlite3.connect(download_db)
@@ -531,16 +555,7 @@ class Chromium:
                     print('[+] File hint keyword \"' + keyword + '\": ' + str(row))
         return
     
-'''
-    def print_downloads(download_db):
-        conn = sqlite3.connect(download_db)
-        c = conn.cursor()
-        c.execute('SELECT name, source, datetime(endTime/1000000, \'unixepoch\') FROM moz_downloads;')
-        print('\n[*] -- Files Downloaded -- ')
-        for row in c:
-            print('[+] File: ' + str(row[0]) + ' from source: ' + str(row[1]) + ' at: ' + str(row[2]))
-        return 
-'''
+
 
 # Main function
 def main():
@@ -712,7 +727,23 @@ def main():
                     else:
                         Chromium.customized_print_search_engine(history_location, custom_keyword)
 
+            # History
+            Chromium.print_history(history_location)
+            # Detect whether parameter -k is specified
+            if custom_keyword_place == None:
+                pass
+            elif os.path.isfile(custom_keyword_place) == False:
+                print('[!] Path Does Not Exist: ' + custom_keyword_place)
+            else:
+                with open (custom_keyword_place, encoding='utf-8') as keyword_file:
+                    custom_keyword = keyword_file.readlines()
+                    custom_keyword = [line.rstrip() for line in custom_keyword]
+                    if custom_keyword == []:
+                        print("[!] Keyword List Empty! Passing Now... \n\n")
+                    else:
+                        Chromium.customized_print_history(history_location, custom_keyword)
             return
+            
     # Other situations
     else:
         print(parser.usage)
