@@ -71,6 +71,8 @@ def print_history(placed_db):
             print ('\n[*] Error reading your places database.')
             print ('[*] Upgrade your Python-Sqlite3 Library')
             exit(0)
+    print ("\n")
+    return 
 
 
 # Parse the file placed.sqlite and output the Search History
@@ -174,6 +176,8 @@ def print_search_engine(placed_db):
                 search=search.replace('wd=', '').replace('+', ' ')
                 print ('[+] ' + date + ' - Searched For: ' + search)
 
+    print ("\n")
+    return 
 
 # Parse the file places.sqlite and output the Bookmark Names and URLs
 def print_bookmark(placed_db):
