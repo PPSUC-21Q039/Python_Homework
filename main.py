@@ -531,12 +531,6 @@ class Chromium:
                 if keyword.lower() in title.lower() or keyword.lower() in url.lower():
                     print('[+] ' + time + ' Visite History hint keyword \"' + keyword.strip() + '\": '+ title + ', ' + url)
         return
-    
-    
-        for _id, url, title, visit_count, last_visit_time in c:
-            time = str(Chromium.get_chrome_datetime(last_visit_time))
-            print('[+] ' + time + ' Visited ' + title + ': ' + url)
-        return
 
 
     def customized_print_search_engine(history_db, customized_keyword):
