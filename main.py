@@ -470,13 +470,12 @@ class Chromium:
     def print_history(history_db):
         conn = sqlite3.connect(history_db)
         c = conn.cursor()
-        c.execute("select * from urls")
+        c.execute("SELECT id,url,title,visit_count,last_visit_time  from urls")
         #c.execute("select url, last_visit_time(visit_date/1000000, 'unixepoch') from urls where visit_count > 0")
         print('\n\n\n[*] -- Browsing History --')
-        for row in c:
-            title = row[2]
-            url = row[1]
-            print('[+] Visited ' + title + ': ' + url)
+        for _id, url, title, visit_count, last_visit_time in c:
+            time = get_chrome_datetime(last_visit_time)
+            print('[+] ' + time + 'Visited ' + title + ': ' + url)
         return
 
 
