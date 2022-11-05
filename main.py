@@ -6,8 +6,6 @@
 # Created Time: 11/5/2022 10:57:13
 # Requirements:
 #   python -m pip install optparse
-# Test Command:
-#   python .\main.py -p C:\Users\Common\AppData\Roaming\Mozilla\Firefox\Profiles\e375hkoh.default-esr > ./output.txt
 ########################################################################
 
 
@@ -479,7 +477,7 @@ class Chromium:
             print ("[*] Error reading bookmark file: " + bookmark_file)
             return
         
-        print("\n\n[*] -- Bookmarks that contain customized keyword --")
+        print("\n\n[*] -- Bookmarks that hint customized keywords --")
         for bookmark in bookmark_json["roots"]["bookmark_bar"]["children"]:
             for keyword in customized_keyword:
                 if keyword.lower() in bookmark["name"].lower() or keyword.lower() in bookmark["url"].lower():
@@ -489,6 +487,60 @@ class Chromium:
 
     def print_history():
         return
+
+    def customized_print_history():
+        return
+
+    def print_search_engine(history_db):
+        conn = sqlite3.connect(history_db)
+        c = conn.cursor()
+        c.execute("SELECT normalized_term FROM keyword_search_terms;")
+        print('\n[*] -- Search Engine Record -- ')
+        for row in c:
+            print('[+] Search Record: ' + str(row))
+        return
+
+    def customized_print_search_engine(history_db, customized_keyword):
+        conn = sqlite3.connect(history_db)
+        c = conn.cursor()
+        c.execute("SELECT normalized_term FROM keyword_search_terms;")
+        print('\n[*] -- Search engine record that hint customized keywords -- ')
+        for row in c:
+            for keyword in customized_keyword:
+                if keyword.lower() in row[0].lower():
+                    print('[+] Search Record hint keyword \"' + keyword + '\": ' + str(row))
+        return
+
+    def print_downloads(download_db):
+        conn = sqlite3.connect(download_db)
+        c = conn.cursor()
+        c.execute("SELECT url FROM downloads_url_chains;")
+        print('\n[*] -- Files Downloaded -- ')
+        for row in c:
+            print('[+] File: ' + str(row))
+        return
+
+    def customized_print_downloads(download_db, customized_keyword):
+        conn = sqlite3.connect(download_db)
+        c = conn.cursor()
+        c.execute("SELECT url FROM downloads_url_chains;")
+        print('\n\n[*] -- Files Downloaded that hint customized keywords -- ')
+        for row in c:
+            for keyword in customized_keyword:
+                if keyword.lower() in row[0].lower():
+                    print('[+] File hint keyword \"' + keyword + '\": ' + str(row))
+        return
+    
+'''
+    def print_downloads(download_db):
+        conn = sqlite3.connect(download_db)
+        c = conn.cursor()
+        c.execute('SELECT name, source, datetime(endTime/1000000, \'unixepoch\') FROM moz_downloads;')
+        print('\n[*] -- Files Downloaded -- ')
+        for row in c:
+            print('[+] File: ' + str(row[0]) + ' from source: ' + str(row[1]) + ' at: ' + str(row[2]))
+        return 
+'''
 
 # Main function
 def main():
@@ -626,6 +678,39 @@ def main():
                         print("[!] Keyword List Empty! Passing Now... \n\n")
                     else:
                         Chromium.customized_print_bookmark(bookmark_location, custom_keyword)            
+
+            # Downloads
+            history_location = os.path.join(path_name, 'History')
+            Chromium.print_downloads(history_location)
+            # Detect whether parameter -k is specified
+            if custom_keyword_place == None:
+                pass
+            elif os.path.isfile(custom_keyword_place) == False:
+                print('[!] Path Does Not Exist: ' + custom_keyword_place)
+            else:
+                with open (custom_keyword_place, encoding='utf-8') as keyword_file:
+                    custom_keyword = keyword_file.readlines()
+                    custom_keyword = [line.rstrip() for line in custom_keyword]
+                    if custom_keyword == []:
+                        print("[!] Keyword List Empty! Passing Now... \n\n")
+                    else:
+                        Chromium.customized_print_downloads(history_location, custom_keyword)
+
+            # Search History
+            Chromium.print_search_engine(history_location)
+            # Detect whether parameter -k is specified
+            if custom_keyword_place == None:
+                pass
+            elif os.path.isfile(custom_keyword_place) == False:
+                print('[!] Path Does Not Exist: ' + custom_keyword_place)
+            else:
+                with open (custom_keyword_place, encoding='utf-8') as keyword_file:
+                    custom_keyword = keyword_file.readlines()
+                    custom_keyword = [line.rstrip() for line in custom_keyword]
+                    if custom_keyword == []:
+                        print("[!] Keyword List Empty! Passing Now... \n\n")
+                    else:
+                        Chromium.customized_print_search_engine(history_location, custom_keyword)
 
             return
     # Other situations
