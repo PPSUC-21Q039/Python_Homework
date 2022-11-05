@@ -450,10 +450,10 @@ def customized_print_bookmark(places_db, customized_keyword):
 
 # Main function
 def main():
-    parser = optparse.OptionParser("[*] Usage: main.py -b <Browser Version> -p <Browser profile path> -c <Custom keyword dictionary>")
+    parser = optparse.OptionParser("[*] Usage: main.py -b <Browser Version> -p <Browser profile path> -k <Custom keyword dictionary>")
+    parser.add_option('-b', dest = 'browser_version', type = 'string', help = 'Specify browser version (Firefox or Chromium)')
     parser.add_option('-p', dest = 'path_name', type = 'string', help = 'Specify Browser profile path')
     parser.add_option('-k', dest = 'custom_keyword', type = 'string', help = 'Specify custom keyword dictionary file')
-    parser.add_option('-b', dest = 'browser_version', type = 'string', help = 'Specify browser version (Firefox or Chromium)')
     (options, args) = parser.parse_args()
 
     path_name = options.path_name
