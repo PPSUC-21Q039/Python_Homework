@@ -104,7 +104,7 @@ def print_search_engine(placed_db):
         url = str(row[0])
         date = str(row[1])
         if 'bing' in url.lower():
-            r = re.findall(r'q=*?\&', url)
+            r = re.findall(r'q=.*\&', url)
             if r:
                 search=r[0].split('&')[0]
                 search=search.replace('q=', '').replace('+', ' ')
@@ -115,8 +115,9 @@ def print_search_engine(placed_db):
         url = str(row[0])
         date = str(row[1])
         if 'google' in url.lower():
-            r = re.findall(r'q=.*?\&', url)
+            r = re.findall(r'q=.*\&', url)
             if r:
+                print (r)
                 search=r[0].split('&')[0]
                 search=search.replace('q=', '').replace('+', ' ')
                 print ('[+] '+ date + ' - Searched Google For: ' + search)
@@ -126,7 +127,7 @@ def print_search_engine(placed_db):
         url = str(row[0])
         date = str(row[1])
         if 'duckduckgo' in url.lower():
-            r = re.findall(r'q=.*?\&', url)
+            r = re.findall(r'q=.*\&', url)
             if r:
                 search=r[0].split('&')[0]
                 search=search.replace('q=', '').replace('+', ' ')
@@ -137,7 +138,7 @@ def print_search_engine(placed_db):
         url = str(row[0])
         date = str(row[1])
         if 'yandex' in url.lower():
-            r = re.findall(r'text=.*?\&', url)
+            r = re.findall(r'text=.*\&', url)
             if r:
                 search=r[0].split('&')[0]
                 search=search.replace('text=', '').replace('+', ' ')
@@ -148,7 +149,7 @@ def print_search_engine(placed_db):
         url = str(row[0])
         date = str(row[1])
         if 'startpage' in url.lower():
-            r = re.findall(r'q=.*?\&', url)
+            r = re.findall(r'q=.*\&', url)
             if r:
                 search=r[0].split('&')[0]
                 search=search.replace('q=', '').replace('+', ' ')
@@ -159,7 +160,7 @@ def print_search_engine(placed_db):
         url = str(row[0])
         date = str(row[1])
         if 'sogou' in url.lower():
-            r = re.findall(r'query=.*?\&', url)
+            r = re.findall(r'query=.*\&', url)
             if r:
                 search=r[0].split('&')[0]
                 search=search.replace('query=', '').replace('+', ' ')
@@ -170,7 +171,7 @@ def print_search_engine(placed_db):
         url = str(row[0])
         date = str(row[1])
         if 'wikipedia' in url.lower():
-            r = re.findall(r'wd=.*?\&', url)
+            r = re.findall(r'wd=.*\&', url)
             if r:
                 search=r[0].split('&')[0]
                 search=search.replace('wd=', '').replace('+', ' ')
@@ -365,7 +366,7 @@ def bookmark_customized_keywords(placed_db, customized_keyword = CUSTOMIZED_KEYW
 def main():
     parser = optparse.OptionParser("[*] Usage: main.py -p <firefox profile path> -c <Custom keyword dictionary>")
     parser.add_option('-p', dest = 'path_name', type = 'string', help = 'Specify Firefox profile path')
-    parser.add_option('-k', dest = 'custom_keyword', help = 'Specify custom keyword dictionary file')
+    parser.add_option('-k', dest = 'custom_keyword', type = 'string', help = 'Specify custom keyword dictionary file')
     (options, args) = parser.parse_args()
 
     path_name = options.path_name
@@ -382,14 +383,14 @@ def main():
         if os.path.isfile(download_db):
             print_downloads(download_db)
         else:
-            print ('[!] Downloads Db does not exist: '+download_db)
+            print ('[!] Downloads Db (downloads.sqlite) does not exist: '+download_db)
 
         cookies_db = os.path.join(path_name, 'cookies.sqlite')
         if os.path.isfile(cookies_db):
             pass
             print_cookies(cookies_db)
         else:
-            print ('[!] Cookies Db does not exist:' + cookies_db)
+            print ('[!] Cookies Db (cookies.sqlite) does not exist:' + cookies_db)
 
         placed_db = os.path.join(path_name, 'places.sqlite')
         if os.path.isfile(placed_db):
@@ -397,7 +398,7 @@ def main():
             print_search_engine(placed_db)
             print_bookmark(placed_db)
 
-            # Detect whether -c is used
+            # Detect whether parameter -k is used
             if custom_keyword_place == None:
                 pass
             elif os.path.isfile(custom_keyword_place) == False:
@@ -411,7 +412,7 @@ def main():
                     else:
                         bookmark_customized_keywords(placed_db, custom_keyword)
         else:
-            print ('[!] placed_db does not exist: ' + placed_db)
+            print ('[!] placed_db (places.db) does not exist: ' + placed_db)
 
     print ("[*] Firefox Analyzing Completed! ")
     return

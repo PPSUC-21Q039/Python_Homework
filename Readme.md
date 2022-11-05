@@ -79,7 +79,7 @@ When parameter `-k` is specified, a customized keyword dictionary file can be us
 > python .\main.py -p C:\Users\***\AppData\Roaming\Mozilla\Firefox\Profiles\***.default-esr -k ./keyword.txt 
 ```
 
-The contents in the file `Keyword.txt` (Can be other filenames) should be separate by Return.
+The contents in the file `Keyword.txt` (Can be other filenames) should be separated by Return.
 
 If there are too many outputs, you can redirect to a certain file:
 
