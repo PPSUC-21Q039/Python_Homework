@@ -16,6 +16,7 @@ import time
 import sqlite3
 import optparse
 import urllib.parse  # Decode the URL Code
+from datetime import datetime, timedelta
 
 # Change the Default Encoding 
 import io
@@ -453,6 +454,10 @@ class Firefox:
 
 
 class Chromium:
+    def get_chrome_datetime(chromedate):
+        return datetime(1601, 1, 1) + timedelta(microseconds=chromedate)
+
+
     def print_bookmark(bookmark_file):
         try:
             with open(bookmark_file, 'r', encoding='utf-8') as input_bookmark:
@@ -471,11 +476,10 @@ class Chromium:
         conn = sqlite3.connect(history_db)
         c = conn.cursor()
         c.execute("SELECT id,url,title,visit_count,last_visit_time  from urls")
-        #c.execute("select url, last_visit_time(visit_date/1000000, 'unixepoch') from urls where visit_count > 0")
         print('\n\n\n[*] -- Browsing History --')
         for _id, url, title, visit_count, last_visit_time in c:
-            time = get_chrome_datetime(last_visit_time)
-            print('[+] ' + time + 'Visited ' + title + ': ' + url)
+            time = str(Chromium.get_chrome_datetime(last_visit_time))
+            print('[+] ' + time + ' Visited ' + title + ': ' + url)
         return
 
 
@@ -519,15 +523,19 @@ class Chromium:
     def customized_print_history(history_db, customized_keyword):
         conn = sqlite3.connect(history_db)
         c = conn.cursor()
-        c.execute("select * from urls")
-        #c.execute("select url, last_visit_time(visit_date/1000000, 'unixepoch') from urls where visit_count > 0")
+        c.execute("SELECT id,url,title,visit_count,last_visit_time  from urls")
         print('\n\n\n[*] -- Browsing History that contain customized keyword --')
-        for row in c:
-            title = row[2]
-            url = row[1]
+        for _id, url, title, visit_count, last_visit_time in c:
+            time = str(Chromium.get_chrome_datetime(last_visit_time))
             for keyword in customized_keyword:
                 if keyword.lower() in title.lower() or keyword.lower() in url.lower():
-                    print('[+] History hint keyword \"' + keyword.strip() + '\": '+ title + ', ' + url)
+                    print('[+] ' + time + ' Visite History hint keyword \"' + keyword.strip() + '\": '+ title + ', ' + url)
+        return
+    
+    
+        for _id, url, title, visit_count, last_visit_time in c:
+            time = str(Chromium.get_chrome_datetime(last_visit_time))
+            print('[+] ' + time + ' Visited ' + title + ': ' + url)
         return
 
 
