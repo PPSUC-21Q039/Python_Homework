@@ -22,17 +22,28 @@ import io
 import sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='gb18030')
 
-CUSTOMIZED_KEYWORD = [] 
-
 
 # Parsing the file downloads.sqlite and output the download record
 def print_downloads(download_db):
     conn = sqlite3.connect(download_db)
     c = conn.cursor()
     c.execute('SELECT name, source, datetime(endTime/1000000, \'unixepoch\') FROM moz_downloads;')
-    print ('\n[*] --- Files Downloaded --- ')
+    print ('\n[*] -- Files Downloaded -- ')
     for row in c:
         print ('[+] File: ' + str(row[0]) + ' from source: ' + str(row[1]) + ' at: ' + str(row[2]))
+    return 
+
+def customized_print_downloads(download_db, customized_keyword):
+    conn = sqlite3.connect(download_db)
+    c = conn.cursor()
+    c.execute('SELECT name, source, datetime(endTime/1000000, \'unixepoch\') FROM moz_downloads;')
+    print ('\n[*] -- File download record from customized keywords list -- ')
+    for row in c:
+        for keyword in customized_keyword:
+            if keyword.lower() in row.lower():
+                print ('[+] File hint keyword \"' + keyword.strip() + '\"' + str(row[0]) + ' from source: ' + str(row[1]) + ' at: ' + str(row[2]))
+    print ("\n\n")
+    return 
 
 
 # Parsing the file cookies.sqlite and output the Cookies
@@ -47,17 +58,64 @@ def print_cookies(cookies_db):
             host = str(row[0])
             name = str(row[1])
             value = str(row[2])
-            print ('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
+            # print ('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
+            # Common Sites
+            if 'google' in host.lower():
+                print ('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
+            if 'baidu' in host.lower():
+                print ('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
+            if 'bing' in host.lower():
+                print ('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
+            if 'youtube' in host.lower():
+                print ('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
+            if 'facebook' in host.lower():
+                print ('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
+            if 'instagram' in host.lower():
+                print ('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
+            if 'twitter' in host.lower():
+                print ('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
+            if 'tx' in host.lower():
+                print ('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
+            if 'sogou' in host.lower():
+                print ('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
+            if 'vpn' in host.lower():
+                print ('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
+            
+
     except Exception(e):
         if 'encrypted' in str(e):
             print ('\n[*] Error reading your cookies database.')
             print ('[*] Upgrade your Python-Sqlite3 Library')
+    return
+
+def customized_print_cookies(cookies_db, customized_keyword):
+    try:
+        conn = sqlite3.connect(cookies_db)
+        c = conn.cursor()
+        c.execute('SELECT host, name, value FROM moz_cookies')
+
+        print ('\n\n[*] -- Cookies from customized keywords list --')
+        for row in c:
+            host = str(row[0])
+            name = str(row[1])
+            value = str(row[2])
+            # print ('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
+            for keyword in customized_keyword:
+                if keyword.lower() in host.lower():
+                    print ('[+] Host hint keyword \"' + keyword.strip() + '\":' + host + ', Cookie: ' + name + ', Value: ' + value)
+
+    except Exception(e):
+        if 'encrypted' in str(e):
+            print ('\n[*] Error reading your cookies database.')
+            print ('[*] Upgrade your Python-Sqlite3 Library')
+    print('\n')
+    return
 
 
 # Parsing the file places.sqlite and output the History Record
-def print_history(placed_db):
+def print_history(places_db):
     try:
-        conn = sqlite3.connect(placed_db)
+        conn = sqlite3.connect(places_db)
         c = conn.cursor()
         c.execute("select url, datetime(visit_date/1000000, 'unixepoch') from moz_places, moz_historyvisits where visit_count > 0 and moz_places.id==moz_historyvisits.place_id;")
 
@@ -75,10 +133,33 @@ def print_history(placed_db):
     return 
 
 
-# Parsing the file placed.sqlite and output the Search History
-def print_search_engine(placed_db):
+def customized_print_history(places_db, customized_keyword):
     try:
-        conn = sqlite3.connect(placed_db)
+        conn = sqlite3.connect(places_db)
+        c = conn.cursor()
+        c.execute("select url, datetime(visit_date/1000000, 'unixepoch') from moz_places, moz_historyvisits where visit_count > 0 and moz_places.id==moz_historyvisits.place_id;")
+
+        print ('\n[*] -- Browsing History from customized keywords list --')
+        for row in c:
+            url = str(row[0])
+            date = str(row[1])
+            for keyword in customized_keyword:
+                if keyword.lower() in url.lower():
+                    print ('[+] Browsing history hint keyword \"' + keyword + '\":' + date + ' - Visited: ' + url)
+            
+    except Exception(e):
+        if 'encrypted' in str(e):
+            print ('\n[*] Error reading your places database.')
+            print ('[*] Upgrade your Python-Sqlite3 Library')
+            exit(0)
+    print ("\n")
+    return 
+
+
+# Parsing the file placed.sqlite and output the Search History
+def print_search_engine(places_db):
+    try:
+        conn = sqlite3.connect(places_db)
         c = conn.cursor()
         c.execute("select url, datetime(visit_date/1000000, 'unixepoch') from moz_places, moz_historyvisits where visit_count > 0 and moz_places.id==moz_historyvisits.place_id;")
     except Exception(e):
@@ -181,9 +262,9 @@ def print_search_engine(placed_db):
     return 
 
 # Parsing the file places.sqlite and output the Bookmark Names and URLs
-def print_bookmark(placed_db):
+def print_bookmark(places_db):
     try:
-        conn = sqlite3.connect(placed_db)
+        conn = sqlite3.connect(places_db)
         c = conn.cursor()
     except Exception(e):
         if 'encrypted' in str(e):
@@ -325,13 +406,14 @@ def print_bookmark(placed_db):
             url = urllib.parse.unquote(url)
             print ('[+] ' + url)
     print ("\n")
+
     return
 
 
 # Parsing the bookmark by customized keywords
-def bookmark_customized_keywords(placed_db, customized_keyword = CUSTOMIZED_KEYWORD):
+def bookmark_customized_keywords(places_db, customized_keyword):
     try:
-        conn = sqlite3.connect(placed_db)
+        conn = sqlite3.connect(places_db)
         c = conn.cursor()
     except Exception(e):
         if 'encrypted' in str(e):
@@ -339,7 +421,7 @@ def bookmark_customized_keywords(placed_db, customized_keyword = CUSTOMIZED_KEYW
             print ('[*] Upgrade your Python-Sqlite3 Library')
             exit(0)   
 
-    print ("-- Bookmark names that contains customized Keywords --")
+    print ("-- Bookmark from customized keywords list --")
     print (customized_keyword)
     c.execute("select title from moz_bookmarks")
     for row in c:
@@ -349,73 +431,144 @@ def bookmark_customized_keywords(placed_db, customized_keyword = CUSTOMIZED_KEYW
             if i in title.lower():
                 print ('[+] ' + title)
     print ("\n")
-    print ("-- Bookmark URLs that contains customized keyword --")
+    print ("[*] -- Bookmark URLs that contains customized keyword --")
     c.execute("select * from moz_places")
     for row in c:
         url = str(row[1])
-        for i in customized_keyword:
-            i = i.lower()
-            if i in url.lower():
+        for keyword in customized_keyword:
+            keyword = i.lower()
+            if keyword in url.lower():
                 url = urllib.parse.unquote(url)
-                print ('[+] ' + url)
+                print ('[+] Bookmark hint keyword: \"' + keyword.strip() + '\": '+ url)
     print ("\n")
+
     return   
 
 
 # Main function
 def main():
-    parser = optparse.OptionParser("[*] Usage: main.py -p <firefox profile path> -c <Custom keyword dictionary>")
-    parser.add_option('-p', dest = 'path_name', type = 'string', help = 'Specify Firefox profile path')
+    parser = optparse.OptionParser("[*] Usage: main.py -b <Browser Version> -p <Browser profile path> -c <Custom keyword dictionary>")
+    parser.add_option('-p', dest = 'path_name', type = 'string', help = 'Specify Browser profile path')
     parser.add_option('-k', dest = 'custom_keyword', type = 'string', help = 'Specify custom keyword dictionary file')
+    parser.add_option('-b', dest = 'browser_version', type = 'string', help = 'Specify browser version (Firefox or Chromium)')
     (options, args) = parser.parse_args()
 
     path_name = options.path_name
     custom_keyword_place = options.custom_keyword
+    browser_version = options.browser_version
 
-    if path_name == None:
+    if browser_version == None:
         print (parser.usage)
         exit(0)
     elif os.path.isdir(path_name) == False:
         print ('[!] Path Does Not Exist: ' + path_name)
         exit(0)
-    else:
-        download_db = os.path.join(path_name, 'downloads.sqlite')
-        if os.path.isfile(download_db):
-            print_downloads(download_db)
+
+    # Browser_version: Firefox
+    elif browser_version == 'Firefox':
+        if path_name == None:
+            print (parser.usage)
+            exit(0)
+        elif os.path.isdir(path_name) == False:
+            print ('[!] Path Does Not Exist: ' + path_name)
+            exit(0)
         else:
-            print ('[!] Downloads Db (downloads.sqlite) does not exist: '+download_db)
+            download_db = os.path.join(path_name, 'downloads.sqlite')
+            if os.path.isfile(download_db):
+                print_downloads(download_db)
 
-        cookies_db = os.path.join(path_name, 'cookies.sqlite')
-        if os.path.isfile(cookies_db):
-            pass
-            print_cookies(cookies_db)
-        else:
-            print ('[!] Cookies Db (cookies.sqlite) does not exist:' + cookies_db)
-
-        placed_db = os.path.join(path_name, 'places.sqlite')
-        if os.path.isfile(placed_db):
-            print_history(placed_db)
-            print_search_engine(placed_db)
-            print_bookmark(placed_db)
-
-            # Detect whether parameter -k is used
-            if custom_keyword_place == None:
-                pass
-            elif os.path.isfile(custom_keyword_place) == False:
-                print ('[!] Path Does Not Exist: ' + custom_keyword_place)
+                # Detect whether parameter -k is specified
+                if custom_keyword_place == None:
+                    pass
+                elif os.path.isfile(custom_keyword_place) == False:
+                    print ('[!] Path Does Not Exist: ' + custom_keyword_place)
+                else:
+                    with open (custom_keyword_place, encoding='utf-8') as keyword_file:
+                        custom_keyword = keyword_file.readlines()
+                        custom_keyword = [line.rstrip() for line in custom_keyword]
+                        if custom_keyword == []:
+                            print ("[!] Keyword List Empty! Passing Now... \n\n")
+                        else:
+                            customized_print_downloads(download_db, custom_keyword)
             else:
-                with open (custom_keyword_place, encoding='utf-8') as keyword_file:
-                    custom_keyword = keyword_file.readlines()
-                    custom_keyword = [line.rstrip() for line in custom_keyword]
-                    if custom_keyword == []:
-                        print ("[!] Keyword List Empty! Passing Now... \n\n")
-                    else:
-                        bookmark_customized_keywords(placed_db, custom_keyword)
-        else:
-            print ('[!] placed_db (places.db) does not exist: ' + placed_db)
+                print ('[!] Downloads Db (downloads.sqlite) does not exist: '+ download_db)
 
-    print ("[*] Firefox Analyzing Completed! ")
-    return
+            # cookies.sqlite
+            cookies_db = os.path.join(path_name, 'cookies.sqlite')
+            if os.path.isfile(cookies_db):
+                print_cookies(cookies_db)
+
+                # Detect whether parameter -k is specified
+                if custom_keyword_place == None:
+                    pass
+                elif os.path.isfile(custom_keyword_place) == False:
+                    print ('[!] Path Does Not Exist: ' + custom_keyword_place)
+                else:
+                    with open (custom_keyword_place, encoding='utf-8') as keyword_file:
+                        custom_keyword = keyword_file.readlines()
+                        custom_keyword = [line.rstrip() for line in custom_keyword]
+                        if custom_keyword == []:
+                            print ("[!] Keyword List Empty! Passing Now... \n\n")
+                        else:
+                            customized_print_cookies(cookies_db, custom_keyword)
+
+            else:
+                print ('[!] Cookies Db (cookies.sqlite) does not exist:' + cookies_db)
+            
+            # places.sqlite
+            places_db = os.path.join(path_name, 'places.sqlite')
+            if os.path.isfile(places_db):
+
+                print_history(places_db)
+                # Detect whether parameter -k is specified
+                if custom_keyword_place == None:
+                    pass
+                elif os.path.isfile(custom_keyword_place) == False:
+                    print ('[!] Path Does Not Exist: ' + custom_keyword_place)
+                else:
+                    with open (custom_keyword_place, encoding='utf-8') as keyword_file:
+                        custom_keyword = keyword_file.readlines()
+                        custom_keyword = [line.rstrip() for line in custom_keyword]
+                        if custom_keyword == []:
+                            print ("[!] Keyword List Empty! Passing Now... \n\n")
+                        else:
+                            customized_print_history(places_db, custom_keyword)
+
+                print_search_engine(places_db)
+
+                print_bookmark(places_db)
+                # Detect whether parameter -k is specified
+                if custom_keyword_place == None:
+                    pass
+                elif os.path.isfile(custom_keyword_place) == False:
+                    print ('[!] Path Does Not Exist: ' + custom_keyword_place)
+                else:
+                    with open (custom_keyword_place, encoding='utf-8') as keyword_file:
+                        custom_keyword = keyword_file.readlines()
+                        custom_keyword = [line.rstrip() for line in custom_keyword]
+                        if custom_keyword == []:
+                            print ("[!] Keyword List Empty! Passing Now... \n\n")
+                        else:
+                            bookmark_customized_keywords(places_db, custom_keyword)
+            else:
+                print ('[!] places_db (places.db) does not exist: ' + places_db)
+
+        print ("[*] Firefox Analyzing Completed! ")
+        return
+    
+    # Browser_version: Chromium
+    elif browser_version == 'Chromium':
+        if path_name == None:
+            print (parser.usage)
+            exit(0)
+        elif os.path.isdir(path_name) == False:
+            print ('[!] Path Does Not Exist: ' + path_name)
+            exit(0)
+        else:
+            return
+    # Others
+    else:
+        print (parser.usage)
 
 
 if __name__ == '__main__':
