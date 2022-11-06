@@ -95,7 +95,7 @@ class Firefox:
             if 'encrypted' in str(e):
                 print('\n[*] Error reading your places database.')
                 print('[*] Upgrade your Python-Sqlite3 Library')
-                exit(0)
+                sys.exit(0)
         print("\n")
         return 
 
@@ -111,7 +111,7 @@ class Firefox:
             if 'encrypted' in str(e):
                 print('\n[*] Error reading your cookies database.')
                 print('[*] Upgrade your Python-Sqlite3 Library')
-                exit(0)
+                sys.exit(0)
                 
         print('\n[*] -- Search Engine History --')
         # Baidu
@@ -215,7 +215,7 @@ class Firefox:
             if 'encrypted' in str(e):
                 print('\n[*] Error reading your cookies database.')
                 print('[*] Upgrade your Python-Sqlite3 Library')
-                exit(0)
+                sys.exit(0)
                 
         print('\n[*] --- Bookmarks --- ')
         # Google or 谷歌
@@ -399,7 +399,7 @@ class Firefox:
             if 'encrypted' in str(e):
                 print('\n[*] Error reading your places database.')
                 print('[*] Upgrade your Python-Sqlite3 Library')
-                exit(0)
+                sys.exit(0)
         print("\n")
         return 
 
@@ -427,7 +427,7 @@ class Firefox:
             if 'encrypted' in str(e):
                 print('\n[*] Error reading your cookies database.')
                 print('[*] Upgrade your Python-Sqlite3 Library')
-                exit(0)   
+                sys.exit(0)   
 
         print("-- Bookmark from customized keywords list --")
         print(customized_keyword)
@@ -572,19 +572,19 @@ def main():
 
     if browser_version == None:
         print(parser.usage)
-        exit(0)
+        sys.exit(0)
     elif os.path.isdir(path_name) == False:
         print('[!] Path Does Not Exist: ' + path_name)
-        exit(0)
+        sys.exit(0)
 
     # Browser_version: Firefox
     elif browser_version == 'Firefox':
         if path_name == None:
             print(parser.usage)
-            exit(0)
+            sys.sys.exit(0)
         elif os.path.isdir(path_name) == False:
             print('[!] Path Does Not Exist: ' + path_name)
-            exit(0)
+            sys.exit(0)
         else:
             download_db = os.path.join(path_name, 'downloads.sqlite')
             if os.path.isfile(download_db):
@@ -673,10 +673,10 @@ def main():
     elif browser_version == 'Chromium':
         if path_name == None:
             print(parser.usage)
-            exit(0)
+            sys.exit(0)
         elif os.path.isdir(path_name) == False:
             print('[!] Path Does Not Exist: ' + path_name)
-            exit(0)
+            sys.exit(0)
         else:
             # Bookmarks
             bookmark_location = os.path.join(path_name, 'Bookmarks')
@@ -752,4 +752,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-    exit(0)
+    sys.exit(0)
