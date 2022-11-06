@@ -575,6 +575,7 @@ def main():
         sys.exit(0)
     elif os.path.isdir(path_name) == False:
         print('[!] Path Does Not Exist: ' + path_name)
+        raise Exception("PathNotExist")
         sys.exit(0)
 
     # Browser_version: Firefox
@@ -584,6 +585,7 @@ def main():
             sys.sys.exit(0)
         elif os.path.isdir(path_name) == False:
             print('[!] Path Does Not Exist: ' + path_name)
+            raise Exception("PathNotExist")
             sys.exit(0)
         else:
             download_db = os.path.join(path_name, 'downloads.sqlite')
@@ -595,6 +597,7 @@ def main():
                     pass
                 elif os.path.isfile(custom_keyword_place) == False:
                     print('[!] Path Does Not Exist: ' + custom_keyword_place)
+                    raise Exception("PathNotExist")
                 else:
                     with open (custom_keyword_place, encoding='utf-8') as keyword_file:
                         custom_keyword = keyword_file.readlines()
@@ -616,6 +619,7 @@ def main():
                     pass
                 elif os.path.isfile(custom_keyword_place) == False:
                     print('[!] Path Does Not Exist: ' + custom_keyword_place)
+                    raise Exception("PathNotExist")
                 else:
                     with open (custom_keyword_place, encoding='utf-8') as keyword_file:
                         custom_keyword = keyword_file.readlines()
@@ -638,6 +642,7 @@ def main():
                     pass
                 elif os.path.isfile(custom_keyword_place) == False:
                     print('[!] Path Does Not Exist: ' + custom_keyword_place)
+                    raise Exception("PathNotExist")
                 else:
                     with open (custom_keyword_place, encoding='utf-8') as keyword_file:
                         custom_keyword = keyword_file.readlines()
@@ -655,6 +660,7 @@ def main():
                     pass
                 elif os.path.isfile(custom_keyword_place) == False:
                     print('[!] Path Does Not Exist: ' + custom_keyword_place)
+                    raise Exception("PathNotExist")
                 else:
                     with open (custom_keyword_place, encoding='utf-8') as keyword_file:
                         custom_keyword = keyword_file.readlines()
@@ -676,6 +682,7 @@ def main():
             sys.exit(0)
         elif os.path.isdir(path_name) == False:
             print('[!] Path Does Not Exist: ' + path_name)
+            raise Exception("PathNotExist")
             sys.exit(0)
         else:
             # Bookmarks
@@ -686,6 +693,7 @@ def main():
                 pass
             elif os.path.isfile(custom_keyword_place) == False:
                 print('[!] Path Does Not Exist: ' + custom_keyword_place)
+                raise Exception("PathNotExist")
             else:
                 with open (custom_keyword_place, encoding='utf-8') as keyword_file:
                     custom_keyword = keyword_file.readlines()
@@ -703,6 +711,7 @@ def main():
                 pass
             elif os.path.isfile(custom_keyword_place) == False:
                 print('[!] Path Does Not Exist: ' + custom_keyword_place)
+                raise Exception("PathNotExist")
             else:
                 with open (custom_keyword_place, encoding='utf-8') as keyword_file:
                     custom_keyword = keyword_file.readlines()
@@ -719,6 +728,7 @@ def main():
                 pass
             elif os.path.isfile(custom_keyword_place) == False:
                 print('[!] Path Does Not Exist: ' + custom_keyword_place)
+                raise Exception("PathNotExist")
             else:
                 with open (custom_keyword_place, encoding='utf-8') as keyword_file:
                     custom_keyword = keyword_file.readlines()
@@ -735,6 +745,7 @@ def main():
                 pass
             elif os.path.isfile(custom_keyword_place) == False:
                 print('[!] Path Does Not Exist: ' + custom_keyword_place)
+                raise Exception("PathNotExist")
             else:
                 with open (custom_keyword_place, encoding='utf-8') as keyword_file:
                     custom_keyword = keyword_file.readlines()
