@@ -16,14 +16,15 @@
 Usage: [*] Usage: firefoxParse.py -p <firefox profile path> -c <Custom keyword dictionary>
 
 Options:
-  -h, --help         show this help message and exit
-  -p PATH_NAME       Specify Firefox profile path
-  -k CUSTOM_KEYWORD  Specify custom keyword dictionary file
+  -h, --help          show this help message and exit
+  -b BROWSER_VERSION  Specify browser version (Firefox or Chromium)
+  -p PATH_NAME        Specify Browser profile path
+  -k CUSTOM_KEYWORD   Specify custom keyword dictionary file
 ```
 
 通过参数 `-p` 指定 Firefox 的 `Profile` 目录，通常在用户主目录下的 `\AppData\Roaming\Mozilla\Firefox\Profiles\` 里面，选取其中一个即可，只指定参数 `-p` 时则进行自动分析；
 
-通过参数 `-b` 指定浏览器类型，可选项为 `Firefox` 或 `Chromium` , 其中 `Firefox`、`Tor Browser`、`Firefox-ESR` 等使用 `Gecko` 内核的属于 `Firefox ` 类型，`Chromium `、`Google Chrome `、`Microsoft Edge `等使用 `Chromium`内核的属于 `Chromium` 类型：
+通过参数 `-b` 指定浏览器类型，可选项为 `-b Firefox` 或 `-b Chromium` , 其中 `Firefox`、`Tor Browser`、`Firefox-ESR` 等使用 `Gecko` 内核的属于 `Firefox ` 类型，`Chromium `、`Google Chrome `、`Microsoft Edge `等使用 `Chromium`内核的属于 `Chromium` 类型：
 
 ```bash
 > python .\main.py -p "C:\Users\***\AppData\Roaming\Mozilla\Firefox\Profiles\***.default-esr" -b Firefox
@@ -71,7 +72,7 @@ Options:
 
 Specify Firefox's `Profile` directory by parameter `-p`, usually in `\AppData\Roaming\Mozilla\Firefox\Profiles` under the user's home directory. The script will automatically analyze when only parameter `-p` is specified;
 
-Specify browser version by parameter `-b`, and the options can be `Firefox` or `Chromium`. For example, browsers such as `Firefox`, `Tor Browser`, `Firefox-ESR`, which are using `Gecko` Kernel should be specified as `Firefox`, and browsers such as `Chromium`, `Google Chrome`, `Microsoft Edge` which are using `Chromium` Kernel should be specified as `Chromium`:
+Specify browser version by parameter `-b`, and the options can be `-b Firefox` or `-b Chromium`. For example, browsers such as `Firefox`, `Tor Browser`, `Firefox-ESR`, which are using `Gecko` Kernel should be specified as `Firefox`, and browsers such as `Chromium`, `Google Chrome`, `Microsoft Edge` which are using `Chromium` Kernel should be specified as `Chromium`:
 
 ```bash
 > python .\main.py -p "C:\Users\***\AppData\Roaming\Mozilla\Firefox\Profiles\***.default-esr" -b Firefox
