@@ -23,6 +23,8 @@ import io
 import sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='gb18030')
 
+
+# Parsing Firefox-based browsers, such as Mozilla Firefox (including mutiple detailed versions like ESR and Nightly), Tor Browser and so on.
 class Firefox:
     # Parsing the file downloads.sqlite and output the download record
     def print_downloads(download_db):
@@ -453,6 +455,7 @@ class Firefox:
         return   
 
 
+# Parsing Chromium-based browsers, such as Chromium, Google Chrome, Edge, 360 Series and so on. 
 class Chromium:
     def get_chrome_datetime(chromedate):
         return datetime(1601, 1, 1) + timedelta(microseconds=chromedate)
