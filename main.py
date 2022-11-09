@@ -71,7 +71,6 @@ class Firefox:
                     print('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
                 if 'vpn' in host.lower():
                     print('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
-                
 
         except Exception(e):
             if 'encrypted' in str(e):
@@ -207,6 +206,7 @@ class Firefox:
 
         print("\n")
         return 
+
 
     # Parsing the file places.sqlite and output the Bookmark Names and URLs
     def print_bookmark(places_db):
