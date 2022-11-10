@@ -24,7 +24,7 @@ import sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='gb18030')
 
 
-# Parsing Firefox-based browsers, such as Mozilla Firefox (including mutiple detailed versions like ESR and Nightly), Tor Browser and so on.
+# Parsing Firefox-based browsers, such as Mozilla Firefox (including mutiple detailed versions like ESR and Nightly), Tor Browser and so on. 
 class Firefox:
     # Parsing the file downloads.sqlite and output the download record
     def print_downloads(download_db):
@@ -558,7 +558,7 @@ class Chromium:
                 if keyword.lower() in row[0].lower():
                     print('[+] File hint keyword \"' + keyword + '\": ' + str(row))
         return
-    
+
 
 # Main function
 def main():
