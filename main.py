@@ -102,6 +102,8 @@ class Firefox:
 
 
     # Parsing the file placed.sqlite and output the Search History
+
+
     def print_search_engine(places_db):
         try:
             conn = sqlite3.connect(places_db)
@@ -209,6 +211,8 @@ class Firefox:
 
 
     # Parsing the file places.sqlite and output the Bookmark Names and URLs
+
+
     def print_bookmark(places_db):
         try:
             conn = sqlite3.connect(places_db)
@@ -421,6 +425,8 @@ class Firefox:
 
 
     # Parsing the bookmark by customized keywords
+
+
     def customized_print_bookmark(places_db, customized_keyword):
         try:
             conn = sqlite3.connect(places_db)
