@@ -4,8 +4,7 @@
 # Author: Wenqiang Hu
 # mail: huwenqiang.hwq@protonmail.com
 # Created Time: 11/5/2022 10:57:13
-# Requirements:
-#   python -m pip install optparse
+# Description: See Readme.md
 ########################################################################
 
 
