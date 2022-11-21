@@ -11,7 +11,6 @@
 import re
 import os
 import json
-import time
 import sqlite3
 import optparse
 import urllib.parse  # Decode the URL Code
@@ -71,7 +70,7 @@ class Firefox:
                 if 'vpn' in host.lower():
                     print('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
 
-        except Exception(e):
+        except Exception as e:
             if 'encrypted' in str(e):
                 print('\n[*] Error reading your cookies database.')
                 print('[*] Upgrade your Python-Sqlite3 Library')
@@ -91,7 +90,7 @@ class Firefox:
                 url = str(row[0])
                 date = str(row[1])
                 print('[+] ' + date + ' - Visited: ' + url)
-        except Exception(e):
+        except Exception as e:
             if 'encrypted' in str(e):
                 print('\n[*] Error reading your places database.')
                 print('[*] Upgrade your Python-Sqlite3 Library')
@@ -107,7 +106,7 @@ class Firefox:
             c = conn.cursor()
             c.execute("select url, datetime(visit_date/1000000, 'unixepoch') from moz_places, moz_historyvisits \
                     where visit_count > 0 and moz_places.id==moz_historyvisits.place_id;")
-        except Exception(e):
+        except Exception as e:
             if 'encrypted' in str(e):
                 print('\n[*] Error reading your cookies database.')
                 print('[*] Upgrade your Python-Sqlite3 Library')
@@ -212,7 +211,7 @@ class Firefox:
         try:
             conn = sqlite3.connect(places_db)
             c = conn.cursor()
-        except Exception(e):
+        except Exception as e:
             if 'encrypted' in str(e):
                 print('\n[*] Error reading your cookies database.')
                 print('[*] Upgrade your Python-Sqlite3 Library')
@@ -314,7 +313,7 @@ class Firefox:
                 print('[+] ' + url)
         print("\n")
 
-        # Youtube or 油管
+        # YouTube or 油管
         print("-- Bookmark names contains keyword \"Youtube\" or \"油管\" --")
         c.execute("select title from moz_bookmarks")
         for row in c:
@@ -372,7 +371,7 @@ class Firefox:
                         print('[+] Host hint keyword \"' + keyword.strip() + '\":' \
                             + host + ', Cookie: ' + name + ', Value: ' + value)
 
-        except Exception(e):
+        except Exception as e:
             if 'encrypted' in str(e):
                 print('\n[*] Error reading your cookies database.')
                 print('[*] Upgrade your Python-Sqlite3 Library')
@@ -396,7 +395,7 @@ class Firefox:
                         print('[+] Browsing history hint keyword \"' + keyword + '\":' 
                             + date + ' - Visited: ' + url)
                 
-        except Exception(e):
+        except Exception as e:
             if 'encrypted' in str(e):
                 print('\n[*] Error reading your places database.')
                 print('[*] Upgrade your Python-Sqlite3 Library')
@@ -424,7 +423,7 @@ class Firefox:
         try:
             conn = sqlite3.connect(places_db)
             c = conn.cursor()
-        except Exception(e):
+        except Exception as e:
             if 'encrypted' in str(e):
                 print('\n[*] Error reading your cookies database.')
                 print('[*] Upgrade your Python-Sqlite3 Library')
@@ -583,7 +582,7 @@ def main():
     elif browser_version == 'Firefox':
         if path_name == None:
             print(parser.usage)
-            sys.sys.exit(0)
+            sys.exit(0)
         elif os.path.isdir(path_name) == False:
             print('[!] Path Does Not Exist: ' + path_name)
             raise Exception("PathNotExist")
