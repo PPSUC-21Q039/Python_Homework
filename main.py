@@ -759,6 +759,7 @@ def main():
     # Other situations
     else:
         print(parser.usage)
+        pause_operating = input()
 
 
 if __name__ == '__main__':
