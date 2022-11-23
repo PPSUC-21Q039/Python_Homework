@@ -65,7 +65,7 @@ for root_path, dirs, files in file_list:
         if type_entry:  # py 如果输入了类型，就进行过滤，如果没有输入，就不过滤类型
             if file.endswith(file_type):
                 # 搜索关键字
-                content = open(root_path + '/' + file, mode='r', encoding='utf-8').read()
+                content = open(root_path + '/' + file, mode='r', encoding='utf-8-sig').read()
 
                 if key in content:
                     print(root_path + '/' + file)
