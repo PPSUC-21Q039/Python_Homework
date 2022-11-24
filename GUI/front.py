@@ -8,6 +8,7 @@
 ########################################################################
 
 import os
+import sys
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import ttk
@@ -22,7 +23,7 @@ custom_keyword_place = ''
 ##实现调用窗口内的各个子元件
 def windows_front_main():
     windows = tk.Tk()
-    windows.geometry('520x220')
+    windows.geometry('510x210')
     windows_title(windows)
     select(windows)
     windows.mainloop()
@@ -54,9 +55,9 @@ def select(windows):
     def selectPath_dir():
         path_ = filedialog.askdirectory()
         var_path.set(path_)
-    tk.Label(path_frame, text="Select the Path:").pack(side='left')
+    tk.Label(path_frame, text="Select Profile Path:").pack(side='left')
     var_path = tk.StringVar()  # 文件夹输入路径变量
-    var_path.set("Input or select Browser Profile Path")
+    var_path.set("Input or Select the Browser Profile Path")
     entry_name = tk.Entry(path_frame, textvariable=var_path, width=55)
     entry_name.pack(side='left')
     tk.Button(path_frame, text='Select', command=selectPath_dir).pack(side='right')
@@ -82,10 +83,14 @@ def start_button(windows,var,var_path,var_file):
         path_name = var_path.get()
         custom_keyword_place = var_file.get()
         main_server.main(path_name = path_name, browser_version = browser_version, custom_keyword_place = custom_keyword_place)
+    def sys_exit():
+        sys.exit(0)
     start_frame = tk.Frame(windows)
     start_frame.pack()
-    button = tk.Button(start_frame, text='Start Parsing', bg='white',command=printSelection)
-    button.pack(side=tk.BOTTOM, padx=20, pady=20)
+    button = tk.Button(start_frame, text='Start Parsing', bg='white', command=printSelection, width=10)
+    button.pack(side=tk.LEFT, padx=20, pady=20)
+    button_quit = tk.Button(start_frame, text='Quit', bg='white', command=sys_exit, width=10)
+    button_quit.pack(side=tk.RIGHT, padx=20, pady=20)
 
 
 ##实现展示输出结果的窗口
