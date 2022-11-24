@@ -24,8 +24,8 @@ from datetime import datetime, timedelta
 # Change the Default Encoding 
 import io
 import sys
-# sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='gb18030')
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf8')
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='gb18030')
+# sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf8')
 
 # Parsing Firefox-based browsers, such as Mozilla Firefox (including mutiple detailed versions like ESR and Nightly), Tor Browser and so on. 
 class Firefox:
