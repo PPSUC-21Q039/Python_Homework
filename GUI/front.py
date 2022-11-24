@@ -14,6 +14,7 @@ from tkinter import ttk
 from PIL.ImageTk import PhotoImage
 import main_server
 
+# 后端配合
 path_name = ''
 browser_version = ''
 custom_keyword_place = ''
