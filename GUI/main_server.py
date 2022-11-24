@@ -582,7 +582,7 @@ class Chromium:
 
 
 # Main function
-def main(path_name, browser_version, custom_keyword_place):
+def main(path_name, browser_version = 'Firefox', custom_keyword_place = ''):
     if browser_version == None:
         print(parser.usage)
         sys.exit(0)

@@ -2,3 +2,6 @@
 /build
 /main.spec
 /.idea
+/GUI/build
+/GUI/dist
+/GUI/module_test.spec
