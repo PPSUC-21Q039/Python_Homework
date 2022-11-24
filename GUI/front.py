@@ -61,7 +61,7 @@ def select(windows):
     tk.Button(path_frame, text='Select', command=selectPath_dir).pack(side='right')
 
     var_file = tk.StringVar()  # 文件输入路径变量
-    var_file.set("Custom Keyword File Location")
+    var_file.set("None")
     entry_file = tk.Entry(click_frame, textvariable=var_file, width=55,state=tk.DISABLED)
     entry_file.pack(side='left')
 
@@ -71,15 +71,16 @@ def select(windows):
     click_button = tk.Checkbutton(click_frame, text='Custom Keyword', command=selectPath_file)
     click_button.pack(side='right')
 
-    start_button(windows, var, var_path)
+    start_button(windows, var, var_path, var_file)
 
 ##开始程序的按钮
-def start_button(windows,var,var_path):
+def start_button(windows,var,var_path,var_file):
     def printSelection():
-        print("The selection is : ", var.get(),"The Path is : ",var_path.get())
+        print("The selection is : ", var.get(),"The Path is : ",var_path.get(),"The File is:",var_file.get())
         browser_version = str(var.get())
         path_name = var_path.get()
-        main_server.main(path_name = path_name, browser_version = browser_version, custom_keyword_place = 'None')
+        custom_keyword_place = var_file.get()
+        main_server.main(path_name = path_name, browser_version = browser_version, custom_keyword_place = custom_keyword_place)
     start_frame = tk.Frame(windows)
     start_frame.pack()
     button = tk.Button(start_frame, text='Start Parsing', bg='white',command=printSelection)
