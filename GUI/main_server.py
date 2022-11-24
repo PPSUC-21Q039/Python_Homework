@@ -776,5 +776,15 @@ def main(path_name, browser_version = 'Firefox', custom_keyword_place = ''):
 
 
 if __name__ == '__main__':
-    main()
+    parser = optparse.OptionParser("main.py -b <Browser version (Firefox or Chromium)> -p <Browser profile path> -k <Custom keyword dictionary file>")
+    parser.add_option('-b', dest = 'browser_version', type = 'string', help = 'Specify browser version (Firefox or Chromium)')
+    parser.add_option('-p', dest = 'path_name', type = 'string', help = 'Specify browser profile path')
+    parser.add_option('-k', dest = 'custom_keyword', type = 'string', help = 'Specify custom keyword dictionary file')
+    (options, args) = parser.parse_args()
+
+    path_name = options.path_name
+    custom_keyword_place = options.custom_keyword
+    browser_version = options.browser_version
+
+    main(path_name = path_name, custom_keyword_place = custom_keyword_place, browser_version = browser_version)
     sys.exit(0)
