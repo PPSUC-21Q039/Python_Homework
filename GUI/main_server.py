@@ -20,6 +20,7 @@ import sqlite3
 import optparse
 import urllib.parse  # Decode the URL Code
 from datetime import datetime, timedelta
+from tkinter import messagebox
 
 # Change the Default Encoding 
 import io
@@ -778,6 +779,12 @@ def main(path_name = '', browser_version = '', custom_keyword_place = ''):
                 print('[!] places_db (places.db) does not exist: ' + places_db)
 
         print("[*] Firefox Analyzing Completed! ")
+        # messagebox.showinfo("Parsing", "Successfully analyzed Firefox records!\nClick Quit to end this process")
+        messagebox_choice = messagebox.askokcancel("Parsing", "Successfully analyzed Firefox records!\nEnd this process now? ")
+        if messagebox_choice == True:
+            sys.exit(0)
+        elif messagebox_choice == False:
+            pass
         return
     
     # Browser_version: Chromium
@@ -859,6 +866,12 @@ def main(path_name = '', browser_version = '', custom_keyword_place = ''):
                         print("[!] Keyword List Empty! Passing Now... \n\n")
                     else:
                         Chromium.customized_print_history(history_location, custom_keyword)
+            
+            messagebox_choice = messagebox.askokcancel("Parsing", "Successfully analyzed Chromium records!\nEnd this process now? ")
+            if messagebox_choice == True:
+                sys.exit(0)
+            elif messagebox_choice == False:
+                pass
             return
             
     # Other situations

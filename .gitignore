@@ -3,3 +3,4 @@
 /.idea
 /GUI/build
 /GUI/output*
+/GUI/dist/output*

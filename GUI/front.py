@@ -15,6 +15,13 @@ from tkinter import ttk
 from PIL.ImageTk import PhotoImage
 import main_server
 
+
+# 后端配合
+path_name = ''
+browser_version = ''
+custom_keyword_place = ''
+
+
 # 用来屏蔽cmd窗口
 if os.name == 'nt':
     import ctypes
@@ -26,11 +33,6 @@ elif os.name == 'posix':
     pass
 else:
     pass
-
-# 后端配合
-path_name = ''
-browser_version = ''
-custom_keyword_place = ''
 
 
 ##实现调用窗口内的各个子元件
