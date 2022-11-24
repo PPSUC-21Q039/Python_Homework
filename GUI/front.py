@@ -2,7 +2,7 @@
 #########################################################################
 # File Name: front.py
 # Author: Haoyang Meng
-# mail: 905505155@qq.com
+# E-mail: 905505155@qq.com
 # Created Time: 11/23/2022 9:06:13
 # Description:
 ########################################################################
@@ -44,7 +44,7 @@ def select(windows):
 
     tk.Label(select_frame, text='Select Browser Version:').pack(side='left')
     ##储存列表
-    select_data = ("Firefox", "Chromiun")  # 使用元组
+    select_data = ("Firefox", "Chromium")  # 使用元组
     var = tk.StringVar(select_frame)
     var.set("- Select -")
     optionmenu = tk.OptionMenu(select_frame, var, *select_data)
@@ -77,9 +77,9 @@ def select(windows):
 def start_button(windows,var,var_path):
     def printSelection():
         print("The selection is : ", var.get(),"The Path is : ",var_path.get())
-        browser_version = var.get()
+        browser_version = str(var.get())
         path_name = var_path.get()
-        main_server.main(path_name = path_name, browser_version = 'Firefox', custom_keyword_place = '')
+        main_server.main(path_name = path_name, browser_version = browser_version, custom_keyword_place = 'None')
     start_frame = tk.Frame(windows)
     start_frame.pack()
     button = tk.Button(start_frame, text='Start Parsing', bg='white',command=printSelection)
