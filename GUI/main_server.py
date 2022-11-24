@@ -27,7 +27,7 @@ import sys
 # sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='gb18030')
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf8')
 OUTPUT_FILE = "./output.txt"
-OUTPUT = open (OUTPUT_FILE, "w", encoding="utf8")
+OUTPUT = open(OUTPUT_FILE, "w", encoding="utf8")
 
 # Parsing Firefox-based browsers, such as Mozilla Firefox (including mutiple detailed versions like ESR and Nightly), Tor Browser and so on.
 class Firefox:

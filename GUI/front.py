@@ -15,10 +15,23 @@ from tkinter import ttk
 from PIL.ImageTk import PhotoImage
 import main_server
 
+# 用来屏蔽cmd窗口
+if os.name == 'nt':
+    import ctypes
+    whnd = ctypes.windll.kernel32.GetConsoleWindow()
+    if whnd != 0:
+        ctypes.windll.user32.ShowWindow(whnd, 0)
+        ctypes.windll.kernel32.CloseHandle(whnd)
+elif os.name == 'posix':
+    pass
+else:
+    pass
+
 # 后端配合
 path_name = ''
 browser_version = ''
 custom_keyword_place = ''
+
 
 ##实现调用窗口内的各个子元件
 def windows_front_main():
@@ -28,11 +41,13 @@ def windows_front_main():
     select(windows)
     windows.mainloop()
 
+
 def windows_title(windows):
     windows.title('Browser Record Prasing')
     # title_img = PhotoImage(file="favicon.ico")
     ##需要pillow库
     # windows.tk.call('wm', 'iconphoto', windows._w, title_img)
+
 
 ##实现下拉选择栏，选择浏览器的版本
 def select(windows):
@@ -75,10 +90,11 @@ def select(windows):
 
     start_button(windows, var, var_path, var_file)
 
+
 ##开始程序的按钮
 def start_button(windows,var,var_path,var_file):
     def printSelection():
-        print("The selection is : ", var.get(),"The Path is : ",var_path.get(),"The File is:",var_file.get())
+        print("The Selection is: ", var.get(), "The Path is: ", var_path.get(), "The File is: ", var_file.get())
         browser_version = str(var.get())
         path_name = var_path.get()
         custom_keyword_place = var_file.get()
