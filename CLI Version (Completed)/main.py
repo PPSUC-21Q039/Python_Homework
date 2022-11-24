@@ -1,7 +1,7 @@
 # coding=utf-8
 #########################################################################
 # File Name: main.py
-# Author: Wenqiang Hu, Haoyang Meng
+# Author: Wenqiang Hu
 # mail: huwenqiang.hwq@protonmail.com
 # Created Time: 11/5/2022 10:57:13
 # Description: See Readme.md
@@ -15,7 +15,6 @@ import sqlite3
 import optparse
 import urllib.parse  # Decode the URL Code
 from datetime import datetime, timedelta
-from tkinter import filedialog
 
 # Change the Default Encoding 
 import io
@@ -43,15 +42,7 @@ class Firefox:
             c = conn.cursor()
             c.execute('SELECT host, name, value FROM moz_cookies')
 
-            print('\n[*] -- Cookies --\n\n')
-            print ("All Cookies:")
-            for row in c:
-                host = str(row[0])
-                name = str(row[1])
-                value = str(row[2])
-                print('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
-            print("\n\n")
-
+            print('\n[*] -- Cookies --')
             for row in c:
                 host = str(row[0])
                 name = str(row[1])
@@ -227,6 +218,7 @@ class Firefox:
                 sys.exit(0)
                 
         print('\n[*] --- Bookmarks --- ')
+        
         # All
         print("-- All Bookmark Names --")
         c.execute("select title from moz_bookmarks")
@@ -584,7 +576,6 @@ class Chromium:
 
 # Main function
 def main():
-    '''
     parser = optparse.OptionParser("main.py -b <Browser version (Firefox or Chromium)> -p <Browser profile path> -k <Custom keyword dictionary file>")
     parser.add_option('-b', dest = 'browser_version', type = 'string', help = 'Specify browser version (Firefox or Chromium)')
     parser.add_option('-p', dest = 'path_name', type = 'string', help = 'Specify browser profile path')
@@ -594,11 +585,6 @@ def main():
     path_name = options.path_name
     custom_keyword_place = options.custom_keyword
     browser_version = options.browser_version
-    '''
-    path_name = filedialog.askdirectory()
-    print(path_name)
-    browser_version = 'Firefox'
-    custom_keyword_place = ''
 
     if browser_version == None:
         print(parser.usage)
@@ -623,7 +609,7 @@ def main():
                 Firefox.print_downloads(download_db)
 
                 # Detect whether parameter -k is specified
-                if custom_keyword_place == '':
+                if custom_keyword_place == None:
                     pass
                 elif os.path.isfile(custom_keyword_place) == False:
                     print('[!] Path Does Not Exist: ' + custom_keyword_place)
@@ -645,7 +631,7 @@ def main():
                 Firefox.print_cookies(cookies_db)
 
                 # Detect whether parameter -k is specified
-                if custom_keyword_place == '':
+                if custom_keyword_place == None:
                     pass
                 elif os.path.isfile(custom_keyword_place) == False:
                     print('[!] Path Does Not Exist: ' + custom_keyword_place)
@@ -668,7 +654,7 @@ def main():
 
                 Firefox.print_history(places_db)
                 # Detect whether parameter -k is specified
-                if custom_keyword_place == '':
+                if custom_keyword_place == None:
                     pass
                 elif os.path.isfile(custom_keyword_place) == False:
                     print('[!] Path Does Not Exist: ' + custom_keyword_place)
@@ -686,7 +672,7 @@ def main():
 
                 Firefox.print_bookmark(places_db)
                 # Detect whether parameter -k is specified
-                if custom_keyword_place == '':
+                if custom_keyword_place == None:
                     pass
                 elif os.path.isfile(custom_keyword_place) == False:
                     print('[!] Path Does Not Exist: ' + custom_keyword_place)

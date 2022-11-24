@@ -42,7 +42,15 @@ class Firefox:
             c = conn.cursor()
             c.execute('SELECT host, name, value FROM moz_cookies')
 
-            print('\n[*] -- Cookies --')
+            print('\n[*] -- Cookies --\n\n')
+            print ("All Cookies:")
+            for row in c:
+                host = str(row[0])
+                name = str(row[1])
+                value = str(row[2])
+                print('[+] Host: ' + host + ', Cookie: ' + name + ', Value: ' + value)
+            print("\n\n")
+
             for row in c:
                 host = str(row[0])
                 name = str(row[1])
@@ -218,6 +226,21 @@ class Firefox:
                 sys.exit(0)
                 
         print('\n[*] --- Bookmarks --- ')
+        # All
+        print("-- All Bookmark Names --")
+        c.execute("select title from moz_bookmarks")
+        for row in c:
+            title = str(row[0])
+            print('[+] ' + title)
+        print("\n")
+        print("-- All Bookmark URLs --")
+        c.execute("select * from moz_places")
+        for row in c:
+            url = str(row[1])
+            url = urllib.parse.unquote(url)
+            print('[+] ' + url)
+        print("\n")
+
         # Google or 谷歌
         print("-- Bookmark names contains keyword \"Google\" or \"谷歌\" --")
         c.execute("select title from moz_bookmarks")
@@ -559,17 +582,7 @@ class Chromium:
 
 
 # Main function
-def main():
-    parser = optparse.OptionParser("main.py -b <Browser version (Firefox or Chromium)> -p <Browser profile path> -k <Custom keyword dictionary file>")
-    parser.add_option('-b', dest = 'browser_version', type = 'string', help = 'Specify browser version (Firefox or Chromium)')
-    parser.add_option('-p', dest = 'path_name', type = 'string', help = 'Specify browser profile path')
-    parser.add_option('-k', dest = 'custom_keyword', type = 'string', help = 'Specify custom keyword dictionary file')
-    (options, args) = parser.parse_args()
-
-    path_name = options.path_name
-    custom_keyword_place = options.custom_keyword
-    browser_version = options.browser_version
-
+def main(path_name, browser_version, custom_keyword_place):
     if browser_version == None:
         print(parser.usage)
         sys.exit(0)
@@ -593,7 +606,7 @@ def main():
                 Firefox.print_downloads(download_db)
 
                 # Detect whether parameter -k is specified
-                if custom_keyword_place == None:
+                if custom_keyword_place == '':
                     pass
                 elif os.path.isfile(custom_keyword_place) == False:
                     print('[!] Path Does Not Exist: ' + custom_keyword_place)
@@ -615,7 +628,7 @@ def main():
                 Firefox.print_cookies(cookies_db)
 
                 # Detect whether parameter -k is specified
-                if custom_keyword_place == None:
+                if custom_keyword_place == '':
                     pass
                 elif os.path.isfile(custom_keyword_place) == False:
                     print('[!] Path Does Not Exist: ' + custom_keyword_place)
@@ -638,7 +651,7 @@ def main():
 
                 Firefox.print_history(places_db)
                 # Detect whether parameter -k is specified
-                if custom_keyword_place == None:
+                if custom_keyword_place == '':
                     pass
                 elif os.path.isfile(custom_keyword_place) == False:
                     print('[!] Path Does Not Exist: ' + custom_keyword_place)
@@ -656,7 +669,7 @@ def main():
 
                 Firefox.print_bookmark(places_db)
                 # Detect whether parameter -k is specified
-                if custom_keyword_place == None:
+                if custom_keyword_place == '':
                     pass
                 elif os.path.isfile(custom_keyword_place) == False:
                     print('[!] Path Does Not Exist: ' + custom_keyword_place)
