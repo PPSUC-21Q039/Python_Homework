@@ -2,12 +2,8 @@
 /build
 /main.spec
 /.idea
-<<<<<<< HEAD
 /GUI/build
 /GUI/dist
 /GUI/module_test.spec
 /GUI/output*
-/CLI/output*
-=======
-/dist/output.txt
->>>>>>> 28788c0 (Added)
+/GUI/__pycache__
