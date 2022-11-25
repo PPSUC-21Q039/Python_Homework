@@ -587,8 +587,8 @@ class Chromium:
         print('\n\n\n[*] -- Browsing History --', file = OUTPUT)
         for _id, url, title, visit_count, last_visit_time in c:
             time = str(Chromium.get_chrome_datetime(last_visit_time))
-            print('[+] ' + time + ' Visited ' + title + ': ' + url)
-            print('[+] ' + time + ' Visited ' + title + ': ' + url, file = OUTPUT)
+            print('[+] ' + time + ' Visited: ' + title + ': ' + url)
+            print('[+] ' + time + ' Visited: ' + title + ': ' + url, file = OUTPUT)
         return
 
     def print_search_engine(history_db):
