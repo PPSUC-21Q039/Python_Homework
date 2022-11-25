@@ -13,7 +13,7 @@ import tkinter as tk
 from tkinter import filedialog
 from tkinter import ttk
 from PIL.ImageTk import PhotoImage
-import main_server
+import Browser_Record_Parsing_CLI
 
 
 # 后端配合
