@@ -38,7 +38,7 @@ else:
 ##实现调用窗口内的各个子元件
 def windows_front_main():
     windows = tk.Tk()
-    windows.geometry('510x210')
+    windows.geometry('550x220')
     windows_title(windows)
     select(windows)
     windows.mainloop()
