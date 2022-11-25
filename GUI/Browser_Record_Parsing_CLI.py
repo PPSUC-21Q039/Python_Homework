@@ -628,7 +628,7 @@ class Chromium:
         for bookmark in bookmark_json["roots"]["bookmark_bar"]["children"]:
             for keyword in customized_keyword:
                 if keyword.lower() in bookmark["name"].lower() or keyword.lower() in bookmark["url"].lower():
-                    print('[+] Bookmark hint keyword \"' + keyword.strip() + '\": ' + bookmark["name"] + ' ' + bookmark["url"])
+                    print('[+] Bookmark hnt keyword \"' + keyword.strip() + '\": ' + bookmark["name"] + ' ' + bookmark["url"])
                     print('[+] Bookmark hint keyword \"' + keyword.strip() + '\": ' + bookmark["name"] + ' ' + bookmark["url"], file = OUTPUT)
         return
 
