@@ -1,11 +1,11 @@
 # coding=utf-8
 #########################################################################
-# File Name: main.py
+# File Name: Browser_Record_Parsing_CLI.py
 # Author: Wenqiang Hu
 # E-mail: huwenqiang.hwq@protonmail.com
 # Created Time: 11/5/2022 10:57:13
 # Description: See Readme.md
-# SDK Help:
+# CALL Help:
 #   main_server.main(path_name = '', browser_version = '', custom_keyword_place = ''),
 #   path_name is a string that specifies the path of profile directory,
 #   browser_version should be 'Firefox' or 'Chromium',

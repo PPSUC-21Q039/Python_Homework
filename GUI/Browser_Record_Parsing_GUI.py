@@ -1,10 +1,10 @@
 # coding=utf-8
 #########################################################################
-# File Name: front.py
-# Author: Haoyang Meng
-# E-mail: 905505155@qq.com
+# File Name: Browser_Record_Parsing_GUI.py
+# Author: Haoyang Meng, Wenqiang Hu
+# E-mail: 905505155@qq.com, huwenqiang.hwq@protonmail.com
 # Created Time: 11/23/2022 9:06:13
-# Description:
+# Description: See Readme.md
 ########################################################################
 
 import os
