@@ -12,7 +12,6 @@ import sys
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import ttk
-from PIL.ImageTk import PhotoImage
 import Browser_Record_Parsing_CLI
 
 
