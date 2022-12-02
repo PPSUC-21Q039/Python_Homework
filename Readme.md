@@ -77,7 +77,7 @@ Options:
 
 ## Main Function
 
-1. Parsing the user's browser profile directory, support `Firefox` and `Chromium` based browsers.
+1. Parsing the user's browser profile directory, support `Firefox` based and `Chromium` based browsers.
 2. Parsing the user cookies automatically.
 3. Parsing the user's browsing history.
 4. Parsing the user's searching history, support Baidu, Google, Bing, Yandex, Duckduckgo, Startpage.
@@ -120,14 +120,13 @@ If there are too many outputs, you can redirect to a certain file:
 > python .\Browser_Record_Parsing_CLI.py -p C:\Users\***\AppData\Roaming\Mozilla\Firefox\Profiles\***.default-esr -b Firefox -k ./keyword.txt > ./output.txt
 ```
 
-
 # Browser Record Parsing Script (`GUI` Version)
 
 The `GUI` version of this program is only a wrapper of the `CLI` version and is called from the `tkinter` frontend, and the essential functionality is no different.
 
 ## Main Functon
 
-Absolutely the same as the `CLI` Version.
+Absolutely the same as the `CLI` Version. Here's the view of the main window:
 
 ![Main Window](Assests/Main.png)
 
