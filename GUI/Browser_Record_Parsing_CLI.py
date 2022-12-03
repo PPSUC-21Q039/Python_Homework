@@ -676,6 +676,7 @@ class Chromium:
 
 # Main function
 def main(path_name = '', browser_version = '', custom_keyword_place = ''):
+    parser = optparse.OptionParser("Browser_Record_Parsing_CLI.py -b <Browser version (Firefox or Chromium)> -p <Browser profile path> -k <Custom keyword dictionary file>")
     if browser_version == None:
         print(parser.usage)
         sys.exit(0)
@@ -881,7 +882,7 @@ def main(path_name = '', browser_version = '', custom_keyword_place = ''):
 
 
 if __name__ == '__main__':
-    parser = optparse.OptionParser("main.py -b <Browser version (Firefox or Chromium)> -p <Browser profile path> -k <Custom keyword dictionary file>")
+    parser = optparse.OptionParser("Browser_Record_Parsing_CLI.py -b <Browser version (Firefox or Chromium)> -p <Browser profile path> -k <Custom keyword dictionary file>")
     parser.add_option('-b', dest = 'browser_version', type = 'string', help = 'Specify browser version (Firefox or Chromium)')
     parser.add_option('-p', dest = 'path_name', type = 'string', help = 'Specify browser profile path')
     parser.add_option('-k', dest = 'custom_keyword', type = 'string', help = 'Specify custom keyword dictionary file')
