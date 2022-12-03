@@ -80,7 +80,7 @@ def select(windows):
 
     var_file = tk.StringVar()  # 文件输入路径变量
     var_file.set("None")
-    entry_file = tk.Entry(click_frame, textvariable=var_file, width=55,state=tk.DISABLED)
+    entry_file = tk.Entry(click_frame, textvariable=var_file, width=55, state=tk.DISABLED)
     entry_file.pack(side='left')
 
     def selectPath_file():
