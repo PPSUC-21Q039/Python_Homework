@@ -99,7 +99,7 @@ def start_button(windows,var,var_path,var_file):
         browser_version = str(var.get())
         path_name = var_path.get()
         custom_keyword_place = var_file.get()
-        main_server.main(path_name = path_name, browser_version = browser_version, custom_keyword_place = custom_keyword_place)
+        Browser_Record_Parsing_CLI.main(path_name = path_name, browser_version = browser_version, custom_keyword_place = custom_keyword_place)
     def sys_exit():
         sys.exit(0)
     start_frame = tk.Frame(windows)
