@@ -6,7 +6,7 @@
 # Created Time: 11/5/2022 10:57:13
 # Description: See Readme.md
 # CALL Help:
-#   main_server.main(path_name = '', browser_version = '', custom_keyword_place = ''),
+#   Browser_Record_Parsing_CLI.main(path_name = '', browser_version = '', custom_keyword_place = ''),
 #   path_name is a string that specifies the path of profile directory,
 #   browser_version should be 'Firefox' or 'Chromium',
 #   custom_keyword_place is a optional parameter that specifies the custom keyword file location.
